@@ -25,7 +25,6 @@ def download_dataset(url: str = DATA_URL, out_path: str = LOCAL_CSV) -> pd.DataF
         r = requests.get(url, timeout=30)
         r.raise_for_status()
     except requests.exceptions.SSLError:
-        # 2-га спроба (той самий датасет), якщо у середовищі проблеми з SSL
         r = requests.get(url, timeout=30, verify=False)
         r.raise_for_status()
 
@@ -231,7 +230,6 @@ def roc_auc_homewin(y_true_ftr: np.ndarray, score_home: np.ndarray, title: str) 
 # 5) Engineer predictive features and estimate predictive power
 def make_predictive_features(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Мінімальний feature engineering, достатній для лаби:
     - implied probabilities з odds:
         qH = (1/B365H) / sum(1/odds)
       аналогічно qD, qA
